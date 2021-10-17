@@ -11,8 +11,8 @@ import RegisterPage from '../pages/RegisterPage';
 
 const AuthRouter = () => {
   return (
-    <div class="auth__main">
-      <div class="auth__box-container">
+    <div className="auth__main">
+      <div className="auth__box-container">
         <Switch>
 
           <Route
