@@ -5,6 +5,7 @@ import { googleAuthProvider } from '../firebase/firebase-config';
 
 import { types } from '../types'
 import { removeLoading, setLoading } from '../actions/ui'
+import { clearNotes } from './notes';
 
 
 // estas funciones sirve para hacer peticiones asincronas
@@ -20,7 +21,6 @@ export const startLoginEmailPassword = ( email, password) =>{
       dispatch( removeLoading() )
     } catch (error) {
       dispatch( removeLoading() )
-      console.log({error})
       Swal.fire({
         title: 'Error!',
         text: error.message,
@@ -66,6 +66,7 @@ export const startLogout = () =>{
       const auth = getAuth();
       await signOut(auth)
       dispatch( logout() )
+      dispatch( clearNotes() )
     } catch (error) {
       console.log(error)
     }

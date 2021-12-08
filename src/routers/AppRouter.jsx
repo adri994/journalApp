@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
   Redirect
 } from "react-router-dom";
 import { getAuth, onAuthStateChanged} from 'firebase/auth';
@@ -13,6 +12,7 @@ import AuthRouter from './AuthRouter';
 import { login } from '../actions/auth'
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
+import { startLoadingNotes } from '../actions/notes';
 
 
 const AppRouter = () => {
@@ -25,12 +25,13 @@ const AppRouter = () => {
 
   useEffect(() => {
     const auth = getAuth()
-    onAuthStateChanged( auth, (user) => {
+    onAuthStateChanged( auth, async(user) => {
 
       // El interrogacion vera si tiene algo el objecto y despues verificare el si existe el uid
       if(user?.uid){
         dispatch( login(user.uid, user.displayName) )
         setIsLogged(true)
+        dispatch( startLoadingNotes(user.uid) )
       } else {
         setIsLogged(false)
       }
